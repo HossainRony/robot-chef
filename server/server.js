@@ -21,4 +21,6 @@ app.use('/api/projects', projectRoutes);
 //     res.send('Robot Chef');
 // })
 
-app.listen(PORT, () => console.log('Server is running on port ${PORT}')); // ask Prof why f-string isn't working
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });

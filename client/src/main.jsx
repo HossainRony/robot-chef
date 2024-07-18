@@ -7,6 +7,7 @@ const root = createRoot(container);
 root.render(
     <React.StrictMode>
         <h1> Robot Chef </h1>
+        <h1> Robot Chef-new </h1>
     </React.StrictMode>
 
 

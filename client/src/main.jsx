@@ -12,6 +12,11 @@ const root = createRoot(container);
 root.render(
     <React.StrictMode>
         <h1> Robot Chef </h1>
+        <h2>Team </h2>
+        <h3>Absar, Lissette, Ka Wai, Mohammad, Allen</h3>
+
+
+
         <Router>
             <Switch>
                 <Route path="/" exact component={Home} />

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Recipes from './components/Recipes';
 import Profile from './components/Profile';
+import './App.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -19,6 +20,4 @@ root.render(
             </Switch>
         </Router>
     </React.StrictMode>
-
-
-)
+);

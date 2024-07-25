@@ -6,7 +6,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #f4f5f6;
   color: #333;
 }
 
@@ -14,7 +14,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e6f4fe;
+  background-color: #eff8fb;
   padding: 20px 40px;
 }
 
@@ -94,7 +94,7 @@ main {
 }
 
 footer {
-  background-color: #ecf6fd;
+  background-color: #eff8fb;
   padding: 20px 40px;
   text-align: center;
   display: flex;

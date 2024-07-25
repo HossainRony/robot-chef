@@ -31,9 +31,14 @@
     line-height: 1.6;
     margin-bottom: 40px;
   }
+
+  .about-text h1 {
+    color: #394865;
+  }
+  
   
   .team-section {
-    background-color: #a3c6ed; 
+    background-color: #a4dcf4; 
     border-radius: 40px;
     padding: 40px 0;
   }
@@ -58,7 +63,7 @@
     width: 200px;
     text-align: center;
     background-color: white; 
-    color: #333; 
+    color: #394865; 
   }
   
   .team-member img {

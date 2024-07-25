@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
   username: {
@@ -22,6 +23,14 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  otpSecret: {
+    type: String,
+    default: null
+  },
+  is2FAEnabled: {
+    type: Boolean,
+    default: false
   }
 });
 

@@ -10,7 +10,7 @@ const Contact = () => {
           <img src={robotChefLogo} alt="Robot Chef Logo" />
         </div>
         <div className="contact-text">
-          <h1><b>Contact Us</b></h1>
+          <h1><b>CONTACT US</b></h1>
           <p>
             We'd love to hear from you! Whether you have a question about features, pricing, need a demo, or anything else, our team is ready to answer all your questions.
           </p>

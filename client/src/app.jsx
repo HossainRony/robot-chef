@@ -38,7 +38,7 @@ function App() {
       <Router>
         <div className="App">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" to="/">MyWebsite</Link>
+            <Link className="navbar-brand" to="/">Robot Chef</Link>
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
@@ -75,9 +75,10 @@ function App() {
               <Route path="/login" element={<Login setUser={setUser} />} />
             </Routes>
           </div>
-          <nav className="navbar fixed-bottom navbar-light bg-light">
-            <div className="container">
-              <span className="navbar-text mx-auto">&copy; 2024 MyWebsite. All rights reserved.</span>
+          <nav className="navbar fixed-bottom navbar-light bg-light footer">
+            <div className="container footer-content">
+              <span className="navbar-text mx-auto">&copy; 2024 | COMP229 - Sec 402 | Group 1 </span>
+              
             </div>
           </nav>
         </div>

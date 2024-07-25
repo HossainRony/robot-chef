@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './register.css';
+import robotChefLogo from '../image/Robot-Chef.png';
 
 const Register = () => {
     const [form, setForm] = useState({
@@ -78,68 +80,73 @@ const Register = () => {
     };
 
     return (
-        <div className="container mt-4">
-            <h1 className="text-center">Register</h1>
-            {error && <p className="text-danger">{error}</p>}
-            {step === 1 && (
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="username"
-                            name="username"
-                            value={form.username}
-                            onChange={handleChange}
-                            required
-                        />
+        <div className="register-container">
+            <div className="register-form">
+                <h1 className="text-center"><b>REGISTER</b></h1>
+                {error && <p className="text-danger">{error}</p>}
+                {step === 1 && (
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="username">Username</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="username"
+                                name="username"
+                                value={form.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                name="email"
+                                value={form.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                name="password"
+                                value={form.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Register</button>
+                    </form>
+                )}
+                {step === 2 && (
+                    <div>
+                        {qrCode && <img src={qrCode} alt="QR Code" />}
+                        <div className="form-group">
+                            <label htmlFor="otp">OTP</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="otp"
+                                name="otp"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button onClick={verify2FASetup} className="btn btn-primary">Verify OTP</button>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            name="password"
-                            value={form.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Register</button>
-                </form>
-            )}
-            {step === 2 && (
-                <div>
-                    {qrCode && <img src={qrCode} alt="QR Code" />}
-                    <div className="form-group">
-                        <label htmlFor="otp">OTP</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="otp"
-                            name="otp"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button onClick={verify2FASetup} className="btn btn-primary">Verify OTP</button>
-                </div>
-            )}
+                )}
+            </div>
+            <div className="register-logo">
+                <img src={robotChefLogo} alt="Robot Chef Logo" />
+            </div>
         </div>
     );
 };

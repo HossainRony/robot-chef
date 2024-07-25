@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './login.css';
+import robotChefLogo from '../image/Robot-Chef.png';
 
 const Login = ({ setUser }) => {
 
@@ -86,55 +88,60 @@ const Login = ({ setUser }) => {
   }
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center">Login</h1>
-      {error && <p className="text-danger">{error}</p>}
-      {step === 1 && (
-         <form onSubmit={handleSubmit}>
-         <div className="form-group">
-           <label htmlFor="email">Email</label>
-           <input
-             type="email"
-             className="form-control"
-             id="email"
-             name="email"
-             value={form.email}
-             onChange={handleChange}
-             required
-           />
-         </div>
-         <div className="form-group">
-           <label htmlFor="password">Password</label>
-           <input
-             type="password"
-             className="form-control"
-             id="password"
-             name="password"
-             value={form.password}
-             onChange={handleChange}
-             required
-           />
-         </div>
-         <button type="submit" className="btn btn-primary">Login</button>
-       </form>
-      )}
-      {step === 2 && (
-        <form onSubmit={handleOtpSubmit}>
-          <div className="form-group">
-            <label htmlFor="otp">OTP</label>
-            <input 
-              type="text" 
-              id="otp"
-              name="otp"
-              value={otp}
-              onChange={handleOtpChange}
-              required
+    <div className="login-container">
+      <div className="login-form">
+        <h1 className="text-center">Login</h1>
+        {error && <p className="text-danger">{error}</p>}
+        {step === 1 && (
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
               />
-          </div>
-          <button type="submit" className="btn btn-primary">Submit OTP</button>
-        </form>
-      )}
-     
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">Login</button>
+          </form>
+        )}
+        {step === 2 && (
+          <form onSubmit={handleOtpSubmit}>
+            <div className="form-group">
+              <label htmlFor="otp">OTP</label>
+              <input
+                type="text"
+                id="otp"
+                name="otp"
+                value={otp}
+                onChange={handleOtpChange}
+                required
+                className="form-control"
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">Submit OTP</button>
+          </form>
+        )}
+      </div>
+      <div className="login-logo">
+        <img src={robotChefLogo} alt="Robot Chef Logo" />
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import Home from './pages/home';
@@ -39,21 +39,43 @@ function App() {
     setUser(null);
   };
 
+  const activeLinkStyle = { color: '#0056b3', fontWeight: 'bold' };
+
   return (
     <Provider store={store}>
       <Router>
         <div className="App">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link className="navbar-brand" to="/">
+            <NavLink className="navbar-brand" to="/">
               <img src={logo} alt="Robot Chef Logo" width="50" height="50" />
-            </Link>
+            </NavLink>
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/services">Services</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/recipes">Recipes</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)} exact>
+                    Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/services" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}>
+                    Services
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/recipes" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}>
+                    Recipes
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/contact" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}>
+                    Contact
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/about" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}>
+                    About
+                  </NavLink>
+                </li>
               </ul>
               <ul className="navbar-nav ml-auto">
                 {user ? (
@@ -63,8 +85,8 @@ function App() {
                   </>
                 ) : (
                   <>
-                    <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
-                    <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                    <li className="nav-item"><NavLink className="nav-link" to="/register" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}>Register</NavLink></li>
+                    <li className="nav-item"><NavLink className="nav-link" to="/login" style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}>Login</NavLink></li>
                   </>
                 )}
               </ul>

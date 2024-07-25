@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const otplib = require('otplib');
+const qrcode = require('qrcode');
 
 // Generate JWT
 const generateToken = (id) => {
@@ -121,3 +123,79 @@ exports.logout = async (req, res) => {
     res.status(403).json({ message: 'Token is not valid' });
   }
 };
+
+exports.setup2FA = async (req, res) => {
+  const { email } = req.body;
+
+  const secret = otplib.authenticator.generateSecret();
+  const otpauth = otplib.authenticator.keyuri(email, 'Comp229 - Sec402 - OTP', secret)
+
+  qrcode.toDataURL(otpauth, async (err, imageUrl) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error generating QR code', err });
+    }
+
+    try {
+      const user = await User.findOneAndUpdate({ email }, { otpSecret: secret });
+      if (!user) {
+        return res.status(500).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'QR code generated', imageUrl })
+
+    } catch (error) {
+      res.status(500).json({ message: 'Error stroing the secret' })
+    }
+  })
+}
+
+exports.verify2FASetup = async (req, res) => {
+  const { email, token } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return rest.status(404).json({ message: 'User not found' });
+  }
+
+  const secret = user.otpSecret;
+  if (!secret) {
+    return res.status(400).json({ message: '2FA is not setup for this user' });
+  }
+  const isValid = otplib.authenticator.check(token, secret);
+
+  if (isValid) {
+    user.is2FAEnabled = true;
+    await user.save();
+    res.status(200).json({ message: '2FA enabled successfully' });
+  } else {
+    res.status(400).json({ message: 'Invalid token' });
+  }
+}
+
+exports.verifyOTP = async (req, res) => {
+  const { email, token } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return rest.status(404).json({ message: 'User not found' });
+  }
+
+  const secret = user.otpSecret;
+  if (!secret) {
+    return res.status(400).json({ message: '2FA is not setup for this user' });
+  }
+
+  const isValid = otplib.authenticator.check(token, secret);
+  if (isValid) {
+    const jwtToken = jwt.sign({ id: user_id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      token: jwtToken
+    });
+  } else {
+    res.status(400).json({ message: 'OTP is invalid' });
+  }
+}

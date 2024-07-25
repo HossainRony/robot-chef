@@ -12,6 +12,12 @@ import RecipeList from './pages/recipe-list';
 import RecipeDetails from './pages/recipe-detail';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import twitterIcon from './image/twitter.png';
+import facebookIcon from './image/facebook.png';
+import instagramIcon from './image/instagram.png';
+import logo from './image/logo-50x50.png';
+import './App.css';
+
 function App() {
   const [user, setUser] = useState(() => {
     const token = localStorage.getItem('jwt_token');
@@ -38,7 +44,9 @@ function App() {
       <Router>
         <div className="App">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" to="/">Robot Chef</Link>
+          <Link className="navbar-brand" to="/">
+              <img src={logo} alt="Robot Chef Logo" width="50" height="50" />
+            </Link>
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
@@ -75,12 +83,22 @@ function App() {
               <Route path="/login" element={<Login setUser={setUser} />} />
             </Routes>
           </div>
-          <nav className="navbar fixed-bottom navbar-light bg-light footer">
+          <footer className="footer">
             <div className="container footer-content">
               <span className="navbar-text mx-auto">&copy; 2024 | COMP229 - Sec 402 | Group 1 </span>
-              
+              <div className="social-media">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                  <img src={twitterIcon} alt="Twitter" />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                  <img src={facebookIcon} alt="Facebook" />
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                  <img src={instagramIcon} alt="Instagram" />
+                </a>
+              </div>
             </div>
-          </nav>
+          </footer>
         </div>
       </Router>
     </Provider>

@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import robotChefLogo from '../image/Robot-Chef.png';
-import { loginUser, verify2FASetupThunk } from '../store/userSlice';
+import { loginUser, verify2FASetupThunk, setUser } from '../store/userSlice';
 
-const Login = ({ setUser }) => {
+const Login = () => {
   const [form, setForm] = useState({
     email: '',
     password: ''
   });
 
   const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // Step 1: Login, Step 2: OTP
+  const [step, setStep] = useState(1);
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,12 +33,12 @@ const Login = ({ setUser }) => {
         setStep(2);
       } else {
         localStorage.setItem('jwt_token', resultAction.token);
-        localStorage.setItem('username', resultAction.username);
-        setUser({ username: resultAction.username });
+        localStorage.setItem('username', resultAction.user.username);
+        dispatch(setUser({ user: resultAction.user, token: resultAction.token }));
         navigate('/');
       }
     } catch (error) {
-      setError('Login failed');
+      setError(loginError || 'Login failed');
     }
   };
 
@@ -48,11 +48,11 @@ const Login = ({ setUser }) => {
     try {
       const resultAction = await dispatch(verify2FASetupThunk({ email: form.email, token: otp })).unwrap();
       localStorage.setItem('jwt_token', resultAction.token);
-      localStorage.setItem('username', resultAction.username);
-      setUser({ username: resultAction.username });
+      localStorage.setItem('username', resultAction.user.username);
+      dispatch(setUser({ user: resultAction.user, token: resultAction.token }));
       navigate('/');
     } catch (error) {
-      setError('OTP verification failed');
+      setError(loginError || 'OTP verification failed');
     }
   };
 

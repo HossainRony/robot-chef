@@ -1,63 +1,154 @@
+// import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// import { register, login, setup2FA, verify2FASetup } from '../services/api';
+
+// const initialState = {
+//   user: null,
+//   status: 'idle',
+//   error: null,
+//   qrCode: '',
+//   otpSetupStatus: 'idle',
+// };
+
+// // User registration
+// export const registerUser = createAsyncThunk('user/register', async (userData) => {
+//   const response = await register(userData);
+//   return response;
+// });
+
+// // User login
+// export const loginUser = createAsyncThunk('user/login', async (userData) => {
+//   const response = await login(userData);
+//   return response;
+// });
+
+// // Setup 2FA
+// export const setup2FAThunk = createAsyncThunk('user/setup2FA', async (email) => {
+//   const response = await setup2FA(email);
+//   return response;
+// });
+
+// // Verify 2FA setup
+// export const verify2FASetupThunk = createAsyncThunk('user/verify2FASetup', async ({ email, token }) => {
+//   const response = await verify2FASetup(email, token);
+//   return response;
+// });
+
+// const userSlice = createSlice({
+//   name: 'user',
+//   initialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       // User registration
+//       .addCase(registerUser.fulfilled, (state, action) => {
+//         state.user = action.payload.user;
+//         state.qrCode = '';
+//         state.otpSetupStatus = 'idle';
+//       })
+//       .addCase(registerUser.rejected, (state, action) => {
+//         state.error = action.error.message;
+//       })
+//       // User login
+//       .addCase(loginUser.fulfilled, (state, action) => {
+//         state.user = action.payload.user;
+//       })
+//       .addCase(loginUser.rejected, (state, action) => {
+//         state.error = action.error.message;
+//       })
+//       // Setup 2FA
+//       .addCase(setup2FAThunk.fulfilled, (state, action) => {
+//         state.qrCode = action.payload.imageUrl;
+//       })
+//       .addCase(setup2FAThunk.rejected, (state, action) => {
+//         state.error = action.error.message;
+//       })
+//       // Verify 2FA setup
+//       .addCase(verify2FASetupThunk.fulfilled, (state, action) => {
+//         state.otpSetupStatus = 'complete';
+//       })
+//       .addCase(verify2FASetupThunk.rejected, (state, action) => {
+//         state.error = action.error.message;
+//       });
+//   },
+// });
+
+// export default userSlice.reducer;
+// //export { registerUser, loginUser, setup2FAThunk, verify2FASetupThunk };
+
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllRecipes, getRecipeById, createRecipe, updateRecipe, deleteRecipe } from '../services/api';
+import { register, login, setup2FA, verify2FASetup } from '../services/api';
 
 const initialState = {
-  recipes: [],
-  currentRecipe: null,
+  user: null,
   status: 'idle',
   error: null,
+  qrCode: '',
+  otpSetupStatus: 'idle',
 };
 
-export const fetchRecipes = createAsyncThunk('recipes/fetchAll', async () => {
-  const response = await getAllRecipes();
+// User registration
+export const registerUser = createAsyncThunk('user/register', async (userData) => {
+  const response = await register(userData);
   return response;
 });
 
-export const fetchRecipeById = createAsyncThunk('recipes/fetchById', async (id) => {
-  const response = await getRecipeById(id);
+// User login
+export const loginUser = createAsyncThunk('user/login', async (userData) => {
+  const response = await login(userData);
   return response;
 });
 
-export const addRecipe = createAsyncThunk('recipes/add', async (recipeData) => {
-  const response = await createRecipe(recipeData);
+// Setup 2FA
+export const setup2FAThunk = createAsyncThunk('user/setup2FA', async (email) => {
+  const response = await setup2FA(email);
   return response;
 });
 
-export const modifyRecipe = createAsyncThunk('recipes/update', async ({ id, recipeData }) => {
-  const response = await updateRecipe(id, recipeData);
+// Verify 2FA setup
+export const verify2FASetupThunk = createAsyncThunk('user/verify2FASetup', async ({ email, token }) => {
+  const response = await verify2FASetup(email, token);
   return response;
 });
 
-export const removeRecipe = createAsyncThunk('recipes/delete', async (id) => {
-  await deleteRecipe(id);
-  return id;
-});
-
-const recipeSlice = createSlice({
-  name: 'recipes',
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchRecipes.fulfilled, (state, action) => {
-        state.recipes = action.payload;
+      // User registration
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.qrCode = '';
+        state.otpSetupStatus = 'idle';
       })
-      .addCase(fetchRecipeById.fulfilled, (state, action) => {
-        state.currentRecipe = action.payload;
+      .addCase(registerUser.rejected, (state, action) => {
+        state.error = action.error.message;
       })
-      .addCase(addRecipe.fulfilled, (state, action) => {
-        state.recipes.push(action.payload);
+      // User login
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
       })
-      .addCase(modifyRecipe.fulfilled, (state, action) => {
-        const index = state.recipes.findIndex((recipe) => recipe._id === action.payload._id);
-        if (index !== -1) {
-          state.recipes[index] = action.payload;
-        }
+      .addCase(loginUser.rejected, (state, action) => {
+        state.error = action.error.message;
       })
-      .addCase(removeRecipe.fulfilled, (state, action) => {
-        state.recipes = state.recipes.filter((recipe) => recipe._id !== action.payload);
+      // Setup 2FA
+      .addCase(setup2FAThunk.fulfilled, (state, action) => {
+        state.qrCode = action.payload.imageUrl;
+      })
+      .addCase(setup2FAThunk.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      // Verify 2FA setup
+      .addCase(verify2FASetupThunk.fulfilled, (state, action) => {
+        state.otpSetupStatus = 'complete';
+      })
+      .addCase(verify2FASetupThunk.rejected, (state, action) => {
+        state.error = action.error.message;
       });
   },
 });
 
-export default recipeSlice.reducer;
+export default userSlice.reducer;
+//export { registerUser, loginUser, setup2FAThunk, verify2FASetupThunk };

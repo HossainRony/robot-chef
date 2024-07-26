@@ -46,6 +46,18 @@ export const logout = async () => {
   return await api.post('/user/logout');
 };
 
+// Setup 2FA
+export const setup2FA = async (email) => {
+  const response = await api.post('/user/setup-2fa', { email });
+  return response.data;
+};
+
+// Verify 2FA setup
+export const verify2FASetup = async (email, token) => {
+  const response = await api.post('/user/verify-2fa-setup', { email, token });
+  return response.data;
+};
+
 // Get all recipes
 export const getAllRecipes = async () => {
   const response = await api.get('/recipes');

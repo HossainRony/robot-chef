@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import robotChefLogo from '../image/Robot-Chef.png';
+import { loginUser, verify2FASetupThunk } from '../store/userSlice';
 
 const Login = ({ setUser }) => {
-
-  // Add 2FA new states
-  const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // Step 1 Login, Step 2 OTP
-
   const [form, setForm] = useState({
     email: '',
     password: ''
   });
+
+  const [otp, setOtp] = useState('');
+  const [step, setStep] = useState(1); // Step 1: Login, Step 2: OTP
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const apiUrl = '/api';
+
+  const loginError = useSelector((state) => state.user.error);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,67 +27,38 @@ const Login = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${apiUrl}/users/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-      });
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-      const data = await response.json();
+      const resultAction = await dispatch(loginUser(form)).unwrap();
 
-      // Check if 2FA is enabled
-      if(data.is2FAEnabled){
-        // Proceed with OTP check
+      if (resultAction.is2FAEnabled) {
         setStep(2);
-      } else{
-        // complete the login process
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
-        setUser({ username: data.username, token: data.token });
+      } else {
+        localStorage.setItem('jwt_token', resultAction.token);
+        localStorage.setItem('username', resultAction.username);
+        setUser({ username: resultAction.username });
         navigate('/');
       }
-      
     } catch (error) {
-      setError(error.message);
+      setError('Login failed');
     }
   };
 
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Email and OTP", form.email, otp);
-    console.log("API URL", `${apiUrl}/users/verify-otp`);
-
     try {
-      const response = await fetch(`${apiUrl}/users/verify-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'},
-        body: JSON.stringify({ email: form.email, token: otp })
-      });
-
-      if(!response.ok){
-        throw new Error('OTP verification failed');
-      }
-
-      const data  = await response.json();
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-      setUser({ username: data.username, token: data.token });
+      const resultAction = await dispatch(verify2FASetupThunk({ email: form.email, token: otp })).unwrap();
+      localStorage.setItem('jwt_token', resultAction.token);
+      localStorage.setItem('username', resultAction.username);
+      setUser({ username: resultAction.username });
       navigate('/');
-
     } catch (error) {
-      setError(error.message);
+      setError('OTP verification failed');
     }
-  }
+  };
 
-  const handleOtpChange = async (e) => {
+  const handleOtpChange = (e) => {
     setOtp(e.target.value);
-  }
+  };
 
   return (
     <div className="login-container">

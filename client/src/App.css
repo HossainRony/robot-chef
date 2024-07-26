@@ -36,7 +36,8 @@ header {
 
 .nav-link:hover,
 .nav-link:focus{
-  color: black;
+  color: #0056b3;
+  transition: all 0.2s;
 }
 
 .nav-link::after{
@@ -120,14 +121,14 @@ main {
 
 footer {
   background-color: #eff8fb;
-  padding: 20px 40px;
+  padding: 10px 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
   width: 100%;
-  bottom: 0;
+  bottom: 0px;
 }
 
 .footer-content {

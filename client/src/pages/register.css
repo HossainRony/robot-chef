@@ -1,0 +1,44 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .register-form {
+    max-width: 500px;
+    width: 100%;
+    margin-right: 40px;
+  }
+  
+  .register-logo img {
+    max-width: 400px; 
+    max-height: 400px;
+  }
+  
+  .register-container h1 {
+    margin-bottom: 20px;
+    color: #394865; 
+  }
+  
+  .register-form p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  

@@ -1,45 +1,29 @@
 import React from 'react';
-
-// const Home = () => {
-//     return (
-//         <div>
-//             <Header />
-//             <Main>
-//                 <h1>Welcome to Robot Chef</h1>
-//                 <p>Discover and manage recipes based on your preferences and available ingredients.</p>
-//                 <h2>Featured Recipes</h2>
-//                 <div className="categories">
-//                     <button>All</button>
-//                     <button>First Category</button>
-//                     <button>Second Category</button>
-//                     <button>Third Category</button>
-//                 </div>
-//                 <div className="recipe-grid">
-//                     {['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'].map((recipe, index) => (
-//                         <div className="recipe-card" key={index}>
-//                             <div className="recipe-image">
-//                                 <img src="/image.png" alt={`Recipe ${recipe}`} />
-//                             </div>
-//                             <p>Recipe {recipe}</p>
-//                         </div>
-//                     ))}
-//                 </div>
-//             </Main>
-//             <Footer />
-//         </div>
-//     ); 
-// }
-
-// export default Home;
-
+import './home.css';
+import robotChefLogo from '../image/Robot-Chef.png';
 
 const Home = () => {
   return (
-    <div>
-      <h2>Home Page</h2>
-      <p>Welcome to the home page!</p>
+    <div className="home-container">
+      <div className="home-content">
+        <div className="home-logo">
+          <img src={robotChefLogo} alt="Robot Chef Logo" />
+        </div>
+        <div className="home-text">
+          <h1><b>Welcome to ROBOT CHEF</b></h1>
+          <h4><b>Your AI Kitchen Companion</b></h4>
+          <p>
+            Discover a world of culinary delights with Robot Chef. Our app offers personalized recipe recommendations, ingredient management, meal planning, and interactive cooking guides. Find recipes based on your preferences and available ingredients, track your pantry, and plan meals effortlessly.
+          </p>
+        </div>
+      </div>
+      <div className="featured-recipes">
+        <h2>FEATURED RECIPES</h2>
+        
+         
+      </div>
     </div>
   );
-};
+}
 
 export default Home;

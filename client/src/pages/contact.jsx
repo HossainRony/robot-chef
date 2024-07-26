@@ -18,7 +18,7 @@ const Contact = () => {
         <p><a href="mailto:support@robotchef.com">support@robotchef.com</a></p>
         
         <h4>Call Us</h4>
-        <p><a href="tel:+123456789">+1 234 567 89</a></p>
+        <p><a href="tel:+12345678910">+1 234 567 8910</a></p>
         </div>
       </div>
     </div>

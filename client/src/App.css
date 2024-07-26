@@ -29,6 +29,11 @@ header {
   margin-right: 30px;
 }
 
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
 
 .nav-link{
   position: relative;

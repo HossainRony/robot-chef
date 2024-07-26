@@ -41,9 +41,10 @@ export const login = async (userData) => {
 
 // User logout
 export const logout = async () => {
+  const response = await api.post('/user/logout', {});
   localStorage.removeItem('jwt_token');
   localStorage.removeItem('username');
-  return await api.post('/user/logout');
+  return response.data;
 };
 
 // Setup 2FA

@@ -19,7 +19,7 @@ app.use(session({
 }));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('Could not connect to MongoDB', err));
 
@@ -34,7 +34,18 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Start server
-app.listen(port, () => {
+// Start server with error handling
+const server = app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${port} is already in use. Trying a different port...`);
+    app.listen(port + 1, () => {
+      console.log(`Server is running on port: ${port + 1}`);
+    });
+  } else {
+    console.error('Server error:', err);
+  }
 });

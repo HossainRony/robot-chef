@@ -12,9 +12,7 @@ import RecipeList from './pages/recipe-list';
 import RecipeDetails from './pages/recipe-detail';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import twitterIcon from './image/twitter.png';
-import facebookIcon from './image/facebook.png';
-import instagramIcon from './image/instagram.png';
+
 import logo from './image/logo-50x50.png';
 import './App.css';
 
@@ -88,13 +86,13 @@ function App() {
               <span className="navbar-text mx-auto">&copy; 2024 | COMP229 - Sec 402 | Group 1 </span>
               <div className="social-media">
                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                  <img src={twitterIcon} alt="Twitter" />
+                <i className='fa-brands fa-twitter'></i>
                 </a>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                  <img src={facebookIcon} alt="Facebook" />
+                <i className='fa-brands fa-facebook'></i>
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                  <img src={instagramIcon} alt="Instagram" />
+                <i className='fa-brands fa-instagram'></i>
                 </a>
               </div>
             </div>

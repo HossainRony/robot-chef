@@ -36,6 +36,26 @@
     margin-bottom: 40px;
   }
   
+  .home-buttons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
   .featured-recipes {
     margin-top: 40px;
   }
@@ -46,19 +66,22 @@
   
   .recipe-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
   }
   
   .recipe-card {
-    background-color: #e9ecef;
-    padding: 20px;
-    border-radius: 10px;
+    text-align: center;
   }
   
-  .recipe-image img {
+  .recipe-card img {
     width: 100%;
     height: auto;
     border-radius: 10px;
   }
   
+  .recipe-card p {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333;
+  }

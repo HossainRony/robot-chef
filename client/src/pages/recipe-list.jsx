@@ -14,7 +14,7 @@ const RecipeList = () => {
 
   return (
     <div>
-      <h2>Recipe List</h2>
+      <h2><b>RECIPE LIST</b></h2>
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe._id}>{recipe.title}</li>

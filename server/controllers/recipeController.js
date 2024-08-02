@@ -12,7 +12,7 @@ exports.createRecipeWithNames = async (req, res) => {
       recipeData.ingredients.map(async (ingredient) => {
         // Try to find the ingredient by name
         let ingredientDoc = await Ingredient.findOne({ name: ingredient.ingredient });
-        
+
         // If the ingredient doesn't exist, create a new one
         if (!ingredientDoc) {
           ingredientDoc = new Ingredient({ name: ingredient.ingredient });
@@ -40,7 +40,7 @@ exports.createRecipeWithNames = async (req, res) => {
     // Create a new recipe document
     const recipe = new Recipe(recipeData);
     await recipe.save();
-    res.status(200).json({ message: 'Recipe created successfully', recipe });
+    res.status(201).json({ message: 'Recipe created successfully', recipe });
   } catch (error) {
     console.error('Error creating recipe:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -83,22 +83,23 @@ exports.updateRecipe = async (req, res) => {
     }
 
     // Update ingredient names to ObjectId references if needed
-    let updatedIngredients = recipe.ingredients;
-    if (ingredients) {
-      updatedIngredients = await Promise.all(
-        ingredients.map(async (ingredient) => {
-          const ingredientDoc = await Ingredient.findOne({ name: ingredient.ingredient });
-          if (!ingredientDoc) {
-            throw new Error(`Ingredient not found: ${ingredient.ingredient}`);
-          }
-          return {
-            ingredient: ingredientDoc._id,
-            quantity: ingredient.quantity,
-            unit: ingredient.unit,
-          };
-        })
-      );
-    }
+    const updatedIngredients = await Promise.all(
+      ingredients.map(async (ingredient) => {
+        let ingredientDoc = await Ingredient.findOne({ name: ingredient.ingredient });
+
+        // If the ingredient doesn't exist, create a new one
+        if (!ingredientDoc) {
+          ingredientDoc = new Ingredient({ name: ingredient.ingredient });
+          await ingredientDoc.save();
+        }
+
+        return {
+          ingredient: ingredientDoc._id,
+          quantity: ingredient.quantity || null,
+          unit: ingredient.unit || null,
+        };
+      })
+    );
 
     recipe.title = title || recipe.title;
     recipe.description = description || recipe.description;
@@ -107,13 +108,10 @@ exports.updateRecipe = async (req, res) => {
     recipe.updatedAt = Date.now();
 
     await recipe.save();
-    res.json({ message: "Recipe updated successfully" });
+    res.json({ message: "Recipe updated successfully", recipe });
   } catch (err) {
-    if (err.message.startsWith('Ingredient not found')) {
-      res.status(400).json({ message: 'Ingredient not found in the database. Please ensure all ingredients are available before updating a recipe.', error: err.message });
-    } else {
-      res.status(500).json({ message: "Server error" });
-    }
+    console.error('Error updating recipe:', err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
@@ -127,9 +125,12 @@ exports.deleteRecipe = async (req, res) => {
       return res.status(401).json({ message: "Not authorized" });
     }
 
-    await recipe.remove();
+    // Use findByIdAndDelete for deleting the recipe
+    await Recipe.findByIdAndDelete(req.params.id);
+
     res.json({ message: "Recipe deleted successfully" });
   } catch (err) {
+    console.error('Error deleting recipe:', err);
     res.status(500).json({ message: "Server error" });
   }
 };

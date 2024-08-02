@@ -63,7 +63,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-form">
-        <h1 className="text-center">Login</h1>
+        <h1 className="text-center"><b>LOGIN</b></h1>
         {error && <p className="text-danger">{error}</p>}
         {step === 1 && (
           <form onSubmit={handleSubmit}>

@@ -3,17 +3,19 @@ const mongoose = require('mongoose');
 const ingredientSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
   },
   quantity: {
     type: Number,
-    required: true,
+    required: false,
+    default: null,
   },
   unit: {
     type: String,
-    required: true,
-  }
+    required: false,
+    default: null,
+  },
 });
 
 module.exports = mongoose.model('Ingredient', ingredientSchema);

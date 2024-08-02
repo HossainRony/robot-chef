@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema({
   title: {
@@ -10,28 +10,32 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  ingredients: [{
-    ingredient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Ingredient',
-      required: true,
+  ingredients: [
+    {
+      ingredient: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Ingredient",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: false,
+        default: null,
+      },
+      unit: {
+        type: String,
+        required: false,
+        default: null,
+      },
     },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    unit: {
-      type: String,
-      required: true,
-    }
-  }],
+  ],
   instructions: {
     type: String,
     required: true,
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   createdAt: {
@@ -41,7 +45,7 @@ const recipeSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
-module.exports = mongoose.model('Recipe', recipeSchema);
+module.exports = mongoose.model("Recipe", recipeSchema);

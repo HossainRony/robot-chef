@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipeById, addRecipe, modifyRecipe } from '../store/recipeSlice';
-
+ 
 const RecipeDetails = () => {
   const initialRecipeState = {
     title: '',
@@ -10,15 +10,15 @@ const RecipeDetails = () => {
     ingredients: [{ ingredient: '', quantity: '', unit: '' }],
     instructions: ''
   };
-
+ 
   const [recipe, setRecipe] = useState(initialRecipeState);
-
+ 
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentRecipe = useSelector((state) => state.recipes.currentRecipe);
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     if (id) {
       dispatch(fetchRecipeById(id));
@@ -27,18 +27,18 @@ const RecipeDetails = () => {
       setRecipe(initialRecipeState);
     }
   }, [id, dispatch]);
-
+ 
   useEffect(() => {
     if (currentRecipe && id) {
       setRecipe(currentRecipe);
     }
   }, [currentRecipe, id]);
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRecipe((prevState) => ({ ...prevState, [name]: value }));
   };
-
+ 
   const handleIngredientChange = (index, e) => {
     const { name, value } = e.target;
     setRecipe((prevState) => {
@@ -47,21 +47,21 @@ const RecipeDetails = () => {
       return { ...prevState, ingredients: updatedIngredients };
     });
   };
-
+ 
   const handleAddIngredient = () => {
     setRecipe((prevState) => ({
       ...prevState,
       ingredients: [...prevState.ingredients, { ingredient: '', quantity: '', unit: '' }]
     }));
   };
-
+ 
   const handleRemoveIngredient = (index) => {
     setRecipe((prevState) => {
       const updatedIngredients = prevState.ingredients.filter((_, i) => i !== index);
       return { ...prevState, ingredients: updatedIngredients };
     });
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -75,7 +75,7 @@ const RecipeDetails = () => {
       setError('Failed to save recipe. Please try again.');
     }
   };
-
+ 
   return (
     <div className="container mt-4">
       <h1 className="text-center">{id ? 'Update Recipe' : 'Create Recipe'}</h1>
@@ -175,5 +175,5 @@ const RecipeDetails = () => {
     </div>
   );
 };
-
+ 
 export default RecipeDetails;
